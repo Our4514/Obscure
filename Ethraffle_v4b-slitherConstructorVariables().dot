@@ -1,0 +1,33 @@
+digraph{
+0[label="Node Type: END_IF 0
+
+EXPRESSION:
+paused = false
+
+IRs:
+paused(bool) := False(bool)"];
+0->1;
+0->2;
+0->3;
+1[label="Node Type: END_IF 1
+
+EXPRESSION:
+raffleId = 1
+
+IRs:
+raffleId(uint256) := 1(uint256)"];
+2[label="Node Type: END_IF 2
+
+EXPRESSION:
+blockNumber = block.number
+
+IRs:
+blockNumber(uint256) := block.number(uint256)"];
+3[label="Node Type: END_IF 3
+
+EXPRESSION:
+nextTicket = 0
+
+IRs:
+nextTicket(uint256) := 0(uint256)"];
+}

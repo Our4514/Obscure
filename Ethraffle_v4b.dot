@@ -1,0 +1,23 @@
+strict digraph {
+subgraph cluster_478_Ethraffle_v4b {
+label = "Ethraffle_v4b"
+"478_slitherConstructorVariables" [label="slitherConstructorVariables"]
+"478_getRefund" [label="getRefund"]
+"478_togglePause" [label="togglePause"]
+"478_chooseWinner" [label="chooseWinner"]
+"478_kill" [label="kill"]
+"478_Ethraffle_v4b" [label="Ethraffle_v4b"]
+"478_fallback" [label="fallback"]
+"478_buyTickets" [label="buyTickets"]
+"478_slitherConstructorConstantVariables" [label="slitherConstructorConstantVariables"]
+"478_endRaffle" [label="endRaffle"]
+"478_fallback" -> "478_buyTickets"
+"478_buyTickets" -> "478_chooseWinner"
+}subgraph cluster_solidity {
+label = "[Solidity]"
+"keccak256()" 
+"selfdestruct(address)" 
+"478_chooseWinner" -> "keccak256()"
+"478_kill" -> "selfdestruct(address)"
+}
+}

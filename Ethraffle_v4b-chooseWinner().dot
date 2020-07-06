@@ -1,0 +1,114 @@
+digraph{
+0[label="Node Type: ENTRY_POINT 0
+"];
+0->1;
+1[label="Node Type: NEW VARIABLE 1
+
+EXPRESSION:
+seed1 = contestants[uint256(block.coinbase) % totalTickets].addr
+
+IRs:
+TMP_15 = CONVERT block.coinbase to uint256
+TMP_16(uint256) = TMP_15 % totalTickets
+REF_7(Ethraffle_v4b.Contestant) -> contestants[TMP_16]
+REF_8(address) -> REF_7.addr
+seed1(address) := REF_8(address)"];
+1->2;
+2[label="Node Type: NEW VARIABLE 2
+
+EXPRESSION:
+seed2 = contestants[uint256(msg.sender) % totalTickets].addr
+
+IRs:
+TMP_17 = CONVERT msg.sender to uint256
+TMP_18(uint256) = TMP_17 % totalTickets
+REF_9(Ethraffle_v4b.Contestant) -> contestants[TMP_18]
+REF_10(address) -> REF_9.addr
+seed2(address) := REF_10(address)"];
+2->3;
+3[label="Node Type: NEW VARIABLE 3
+
+EXPRESSION:
+seed3 = block.difficulty
+
+IRs:
+seed3(uint256) := block.difficulty(uint256)"];
+3->4;
+4[label="Node Type: NEW VARIABLE 4
+
+EXPRESSION:
+randHash = keccak256()(seed1,seed2,seed3)
+
+IRs:
+TMP_19 = SOLIDITY_CALL keccak256()(seed1,seed2,seed3)
+randHash(bytes32) := TMP_19(bytes32)"];
+4->5;
+5[label="Node Type: NEW VARIABLE 5
+
+EXPRESSION:
+winningNumber = uint256(randHash) % totalTickets
+
+IRs:
+TMP_20 = CONVERT randHash to uint256
+TMP_21(uint256) = TMP_20 % totalTickets
+winningNumber(uint256) := TMP_21(uint256)"];
+5->6;
+6[label="Node Type: NEW VARIABLE 6
+
+EXPRESSION:
+winningAddress = contestants[winningNumber].addr
+
+IRs:
+REF_11(Ethraffle_v4b.Contestant) -> contestants[winningNumber]
+REF_12(address) -> REF_11.addr
+winningAddress(address) := REF_12(address)"];
+6->7;
+7[label="Node Type: EXPRESSION 7
+
+EXPRESSION:
+RaffleResult(raffleId,winningNumber,winningAddress,seed1,seed2,seed3,randHash)
+
+IRs:
+Emit RaffleResult(raffleId.winningNumber.winningAddress.seed1.seed2.seed3.randHash)"];
+7->8;
+8[label="Node Type: EXPRESSION 8
+
+EXPRESSION:
+raffleId ++
+
+IRs:
+TMP_23(uint256) := raffleId(uint256)
+raffleId(uint256) = raffleId + 1"];
+8->9;
+9[label="Node Type: EXPRESSION 9
+
+EXPRESSION:
+nextTicket = 0
+
+IRs:
+nextTicket(uint256) := 0(uint256)"];
+9->10;
+10[label="Node Type: EXPRESSION 10
+
+EXPRESSION:
+blockNumber = block.number
+
+IRs:
+blockNumber(uint256) := block.number(uint256)"];
+10->11;
+11[label="Node Type: EXPRESSION 11
+
+EXPRESSION:
+winningAddress.transfer(prize)
+
+IRs:
+Transfer dest:winningAddress value:prize"];
+11->12;
+12[label="Node Type: EXPRESSION 12
+
+EXPRESSION:
+feeAddress.transfer(fee)
+
+IRs:
+Transfer dest:feeAddress value:fee"];
+}

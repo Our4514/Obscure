@@ -1,0 +1,64 @@
+0, function buyTickets() payable public {
+
+1,         if (paused) {
+
+2,             msg.sender.transfer(msg.value);
+
+3,             return;
+
+4,         }
+
+5,                                                                       
+
+6,         uint moneySent = msg.value;
+
+7, 
+
+8,         while (moneySent >= pricePerTicket && nextTicket < totalTickets) {
+
+9,             uint currTicket = 0;
+
+10,             if (gaps.length > 0) {
+
+11,                 currTicket = gaps[gaps.length-1];
+
+12,                 gaps.length--;
+
+13,             }
+
+14,             else {
+
+15,                 currTicket = nextTicket++;
+
+16,             }
+
+17,   
+
+18,             contestants[currTicket] = Contestant(msg.sender, raffleId);
+
+19,             TicketPurchase(raffleId, msg.sender, currTicket);
+
+20,             moneySent -= pricePerTicket;
+
+21,         }
+
+22,   
+
+23,           
+
+24,         if (nextTicket == totalTickets) {
+
+25,             chooseWinner();
+
+26,         }
+
+27,   
+
+28,           
+
+29,         if (moneySent > 0) {
+
+30,             msg.sender.transfer(moneySent);
+
+31,         }
+

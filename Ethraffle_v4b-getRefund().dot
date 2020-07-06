@@ -1,0 +1,121 @@
+digraph{
+0[label="Node Type: ENTRY_POINT 0
+"];
+0->1;
+1[label="Node Type: NEW VARIABLE 1
+
+EXPRESSION:
+refund = 0
+
+IRs:
+refund(uint256) := 0(uint256)"];
+1->4;
+2[label="Node Type: BEGIN_LOOP 2
+"];
+2->5;
+3[label="Node Type: END_LOOP 3
+"];
+3->13;
+4[label="Node Type: NEW VARIABLE 4
+
+EXPRESSION:
+i = 0
+
+IRs:
+i(uint256) := 0(uint256)"];
+4->2;
+5[label="Node Type: IF_LOOP 5
+
+EXPRESSION:
+i < totalTickets
+
+IRs:
+TMP_26(bool) = i < totalTickets
+CONDITION TMP_26"];
+5->3;
+5->6;
+6[label="Node Type: IF 6
+
+EXPRESSION:
+msg.sender == contestants[i].addr && raffleId == contestants[i].raffleId
+
+IRs:
+REF_15(Ethraffle_v4b.Contestant) -> contestants[i]
+REF_16(address) -> REF_15.addr
+TMP_27(bool) = msg.sender == REF_16
+REF_17(Ethraffle_v4b.Contestant) -> contestants[i]
+REF_18(uint256) -> REF_17.raffleId
+TMP_28(bool) = raffleId == REF_18
+TMP_29(bool) = TMP_27 && TMP_28
+CONDITION TMP_29"];
+6->7[label="True"];
+6->11[label="False"];
+7[label="Node Type: EXPRESSION 7
+
+EXPRESSION:
+refund += pricePerTicket
+
+IRs:
+refund(uint256) = refund + pricePerTicket"];
+7->8;
+8[label="Node Type: EXPRESSION 8
+
+EXPRESSION:
+contestants[i] = Contestant(address(0),0)
+
+IRs:
+REF_19(Ethraffle_v4b.Contestant) -> contestants[i]
+TMP_30 = CONVERT 0 to address
+TMP_31 = new Contestant(TMP_30,0)
+REF_19 (->contestants) := TMP_31(Ethraffle_v4b.Contestant)"];
+8->9;
+9[label="Node Type: EXPRESSION 9
+
+EXPRESSION:
+gaps.push(i)
+
+IRs:
+PUSH i in gaps
+TMP_32 -> LENGTH gaps"];
+9->10;
+10[label="Node Type: EXPRESSION 10
+
+EXPRESSION:
+TicketRefund(raffleId,msg.sender,i)
+
+IRs:
+Emit TicketRefund(raffleId.msg.sender.i)"];
+10->11;
+11[label="Node Type: END_IF 11
+"];
+11->12;
+12[label="Node Type: EXPRESSION 12
+
+EXPRESSION:
+i ++
+
+IRs:
+TMP_34(uint256) := i(uint256)
+i(uint256) = i + 1"];
+12->5;
+13[label="Node Type: IF 13
+
+EXPRESSION:
+refund > 0
+
+IRs:
+TMP_35(bool) = refund > 0
+CONDITION TMP_35"];
+13->14[label="True"];
+13->15[label="False"];
+14[label="Node Type: EXPRESSION 14
+
+EXPRESSION:
+msg.sender.transfer(refund)
+
+IRs:
+Transfer dest:msg.sender value:refund"];
+14->15;
+15[label="Node Type: END_IF 15
+"];
+}

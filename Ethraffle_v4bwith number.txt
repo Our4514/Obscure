@@ -1,0 +1,45 @@
+0, strict digraph {
+
+1, subgraph cluster_478_Ethraffle_v4b {
+
+2, label = "Ethraffle_v4b"
+
+3, "478_slitherConstructorVariables" [label="slitherConstructorVariables"]
+
+4, "478_getRefund" [label="getRefund"]
+
+5, "478_togglePause" [label="togglePause"]
+
+6, "478_chooseWinner" [label="chooseWinner"]
+
+7, "478_kill" [label="kill"]
+
+8, "478_Ethraffle_v4b" [label="Ethraffle_v4b"]
+
+9, "478_fallback" [label="fallback"]
+
+10, "478_buyTickets" [label="buyTickets"]
+
+11, "478_slitherConstructorConstantVariables" [label="slitherConstructorConstantVariables"]
+
+12, "478_endRaffle" [label="endRaffle"]
+
+13, "478_fallback" -> "478_buyTickets"
+
+14, "478_buyTickets" -> "478_chooseWinner"
+
+15, }subgraph cluster_solidity {
+
+16, label = "[Solidity]"
+
+17, "keccak256()" 
+
+18, "selfdestruct(address)" 
+
+19, "478_chooseWinner" -> "keccak256()"
+
+20, "478_kill" -> "selfdestruct(address)"
+
+21, }
+
+22, }

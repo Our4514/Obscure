@@ -1,0 +1,348 @@
+0, digraph{
+
+1, 0[label="Node Type: ENTRY_POINT 0
+
+2, "];
+
+3, 0->1;
+
+4, 1[label="Node Type: IF 1
+
+5, 
+
+6, EXPRESSION:
+
+7, paused
+
+8, 
+
+9, IRs:
+
+10, CONDITION paused"];
+
+11, 1->2[label="True"];
+
+12, 1->4[label="False"];
+
+13, 
+
+14, 2[label="Node Type: EXPRESSION 2
+
+15, 
+
+16, EXPRESSION:
+
+17, msg.sender.transfer(msg.value)
+
+18, 
+
+19, IRs:
+
+20, Transfer dest:msg.sender value:msg.value"];
+
+21, 2->3;
+
+22, 3[label="Node Type: RETURN 3
+
+23, "];
+
+24, 4[label="Node Type: END_IF 4
+
+25, "];
+
+26, 4->5;
+
+27, 5[label="Node Type: NEW VARIABLE 5
+
+28, 
+
+29, EXPRESSION:
+
+30, moneySent = msg.value
+
+31, 
+
+32, IRs:
+
+33, moneySent(uint256) := msg.value(uint256)"];
+
+34, 5->6;
+
+35, 6[label="Node Type: BEGIN_LOOP 6
+
+36, "];
+
+37, 6->7;
+
+38, 7[label="Node Type: IF_LOOP 7
+
+39, 
+
+40, EXPRESSION:
+
+41, moneySent >= pricePerTicket && nextTicket < totalTickets
+
+42, 
+
+43, IRs:
+
+44, TMP_2(bool) = moneySent >= pricePerTicket
+
+45, TMP_3(bool) = nextTicket < totalTickets
+
+46, TMP_4(bool) = TMP_2 && TMP_3
+
+47, CONDITION TMP_4"];
+
+48, 7->8;
+
+49, 7->17;
+
+50, 8[label="Node Type: NEW VARIABLE 8
+
+51, 
+
+52, EXPRESSION:
+
+53, currTicket = 0
+
+54, 
+
+55, IRs:
+
+56, currTicket(uint256) := 0(uint256)"];
+
+57, 8->9;
+
+58, 9[label="Node Type: IF 9
+
+59, 
+
+60, EXPRESSION:
+
+61, gaps.length > 0
+
+62, 
+
+63, IRs:
+
+64, REF_1 -> LENGTH gaps
+
+65, TMP_5(bool) = REF_1 > 0
+
+66, CONDITION TMP_5"];
+
+67, 9->10[label="True"];
+
+68, 9->12[label="False"];
+
+69, 10[label="Node Type: EXPRESSION 10
+
+70, 
+
+71, EXPRESSION:
+
+72, currTicket = gaps[gaps.length - 1]
+
+73, 
+
+74, IRs:
+
+75, REF_2 -> LENGTH gaps
+
+76, TMP_6(uint256) = REF_2 - 1
+
+77, REF_3(uint256) -> gaps[TMP_6]
+
+78, currTicket(uint256) := REF_3(uint256)"];
+
+79, 10->11;
+
+80, 11[label="Node Type: EXPRESSION 11
+
+81, 
+
+82, EXPRESSION:
+
+83, gaps.length --
+
+84, 
+
+85, IRs:
+
+86, REF_4 -> LENGTH gaps
+
+87, TMP_7(uint256) := REF_4(uint256)
+
+88, REF_4(-> gaps) = REF_4 - 1"];
+
+89, 11->13;
+
+90, 12[label="Node Type: EXPRESSION 12
+
+91, 
+
+92, EXPRESSION:
+
+93, currTicket = nextTicket ++
+
+94, 
+
+95, IRs:
+
+96, TMP_8(uint256) := nextTicket(uint256)
+
+97, nextTicket(uint256) = nextTicket + 1
+
+98, currTicket(uint256) := TMP_8(uint256)"];
+
+99, 12->13;
+
+100, 13[label="Node Type: END_IF 13
+
+101, "];
+
+102, 13->14;
+
+103, 14[label="Node Type: EXPRESSION 14
+
+104, 
+
+105, EXPRESSION:
+
+106, contestants[currTicket] = Contestant(msg.sender,raffleId)
+
+107, 
+
+108, IRs:
+
+109, REF_5(Ethraffle_v4b.Contestant) -> contestants[currTicket]
+
+110, TMP_9 = new Contestant(msg.sender,raffleId)
+
+111, REF_5 (->contestants) := TMP_9(Ethraffle_v4b.Contestant)"];
+
+112, 14->15;
+
+113, 15[label="Node Type: EXPRESSION 15
+
+114, 
+
+115, EXPRESSION:
+
+116, TicketPurchase(raffleId,msg.sender,currTicket)
+
+117, 
+
+118, IRs:
+
+119, Emit TicketPurchase(raffleId.msg.sender.currTicket)"];
+
+120, 15->16;
+
+121, 16[label="Node Type: EXPRESSION 16
+
+122, 
+
+123, EXPRESSION:
+
+124, moneySent -= pricePerTicket
+
+125, 
+
+126, IRs:
+
+127, moneySent(uint256) = moneySent - pricePerTicket"];
+
+128, 16->7;
+
+129, 17[label="Node Type: END_LOOP 17
+
+130, "];
+
+131, 17->18;
+
+132, 18[label="Node Type: IF 18
+
+133, 
+
+134, EXPRESSION:
+
+135, nextTicket == totalTickets
+
+136, 
+
+137, IRs:
+
+138, TMP_11(bool) = nextTicket == totalTickets
+
+139, CONDITION TMP_11"];
+
+140, 18->19[label="True"];
+
+141, 18->20[label="False"];
+
+142, 19[label="Node Type: EXPRESSION 19
+
+143, 
+
+144, EXPRESSION:
+
+145, chooseWinner()
+
+146, 
+
+147, IRs:
+
+148, INTERNAL_CALL, Ethraffle_v4b.chooseWinner()()"];
+
+149, 19->20;
+
+150, 20[label="Node Type: END_IF 20
+
+151, "];
+
+152, 20->21;
+
+153, 21[label="Node Type: IF 21
+
+154, 
+
+155, EXPRESSION:
+
+156, moneySent > 0
+
+157, 
+
+158, IRs:
+
+159, TMP_13(bool) = moneySent > 0
+
+160, CONDITION TMP_13"];
+
+161, 21->22[label="True"];
+
+162, 21->23[label="False"];
+
+163, 22[label="Node Type: EXPRESSION 22
+
+164, 
+
+165, EXPRESSION:
+
+166, msg.sender.transfer(moneySent)
+
+167, 
+
+168, IRs:
+
+169, Transfer dest:msg.sender value:moneySent"];
+
+170, 22->23;
+
+171, 23[label="Node Type: END_IF 23
+
+172, "];
+
+173, }
+

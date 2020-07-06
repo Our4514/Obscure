@@ -1,0 +1,174 @@
+digraph{
+0[label="Node Type: ENTRY_POINT 0
+"];
+0->1;
+1[label="Node Type: IF 1
+
+EXPRESSION:
+paused
+
+IRs:
+CONDITION paused"];
+1->2[label="True"];
+1->4[label="False"];
+
+2[label="Node Type: EXPRESSION 2
+
+EXPRESSION:
+msg.sender.transfer(msg.value)
+
+IRs:
+Transfer dest:msg.sender value:msg.value"];
+2->3;
+3[label="Node Type: RETURN 3
+"];
+4[label="Node Type: END_IF 4
+"];
+4->5;
+5[label="Node Type: NEW VARIABLE 5
+
+EXPRESSION:
+moneySent = msg.value
+
+IRs:
+moneySent(uint256) := msg.value(uint256)"];
+5->6;
+6[label="Node Type: BEGIN_LOOP 6
+"];
+6->7;
+7[label="Node Type: IF_LOOP 7
+
+EXPRESSION:
+moneySent >= pricePerTicket && nextTicket < totalTickets
+
+IRs:
+TMP_2(bool) = moneySent >= pricePerTicket
+TMP_3(bool) = nextTicket < totalTickets
+TMP_4(bool) = TMP_2 && TMP_3
+CONDITION TMP_4"];
+7->8;
+7->17;
+8[label="Node Type: NEW VARIABLE 8
+
+EXPRESSION:
+currTicket = 0
+
+IRs:
+currTicket(uint256) := 0(uint256)"];
+8->9;
+9[label="Node Type: IF 9
+
+EXPRESSION:
+gaps.length > 0
+
+IRs:
+REF_1 -> LENGTH gaps
+TMP_5(bool) = REF_1 > 0
+CONDITION TMP_5"];
+9->10[label="True"];
+9->12[label="False"];
+10[label="Node Type: EXPRESSION 10
+
+EXPRESSION:
+currTicket = gaps[gaps.length - 1]
+
+IRs:
+REF_2 -> LENGTH gaps
+TMP_6(uint256) = REF_2 - 1
+REF_3(uint256) -> gaps[TMP_6]
+currTicket(uint256) := REF_3(uint256)"];
+10->11;
+11[label="Node Type: EXPRESSION 11
+
+EXPRESSION:
+gaps.length --
+
+IRs:
+REF_4 -> LENGTH gaps
+TMP_7(uint256) := REF_4(uint256)
+REF_4(-> gaps) = REF_4 - 1"];
+11->13;
+12[label="Node Type: EXPRESSION 12
+
+EXPRESSION:
+currTicket = nextTicket ++
+
+IRs:
+TMP_8(uint256) := nextTicket(uint256)
+nextTicket(uint256) = nextTicket + 1
+currTicket(uint256) := TMP_8(uint256)"];
+12->13;
+13[label="Node Type: END_IF 13
+"];
+13->14;
+14[label="Node Type: EXPRESSION 14
+
+EXPRESSION:
+contestants[currTicket] = Contestant(msg.sender,raffleId)
+
+IRs:
+REF_5(Ethraffle_v4b.Contestant) -> contestants[currTicket]
+TMP_9 = new Contestant(msg.sender,raffleId)
+REF_5 (->contestants) := TMP_9(Ethraffle_v4b.Contestant)"];
+14->15;
+15[label="Node Type: EXPRESSION 15
+
+EXPRESSION:
+TicketPurchase(raffleId,msg.sender,currTicket)
+
+IRs:
+Emit TicketPurchase(raffleId.msg.sender.currTicket)"];
+15->16;
+16[label="Node Type: EXPRESSION 16
+
+EXPRESSION:
+moneySent -= pricePerTicket
+
+IRs:
+moneySent(uint256) = moneySent - pricePerTicket"];
+16->7;
+17[label="Node Type: END_LOOP 17
+"];
+17->18;
+18[label="Node Type: IF 18
+
+EXPRESSION:
+nextTicket == totalTickets
+
+IRs:
+TMP_11(bool) = nextTicket == totalTickets
+CONDITION TMP_11"];
+18->19[label="True"];
+18->20[label="False"];
+19[label="Node Type: EXPRESSION 19
+
+EXPRESSION:
+chooseWinner()
+
+IRs:
+INTERNAL_CALL, Ethraffle_v4b.chooseWinner()()"];
+19->20;
+20[label="Node Type: END_IF 20
+"];
+20->21;
+21[label="Node Type: IF 21
+
+EXPRESSION:
+moneySent > 0
+
+IRs:
+TMP_13(bool) = moneySent > 0
+CONDITION TMP_13"];
+21->22[label="True"];
+21->23[label="False"];
+22[label="Node Type: EXPRESSION 22
+
+EXPRESSION:
+msg.sender.transfer(moneySent)
+
+IRs:
+Transfer dest:msg.sender value:moneySent"];
+22->23;
+23[label="Node Type: END_IF 23
+"];
+}

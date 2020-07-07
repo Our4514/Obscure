@@ -30,4 +30,4 @@ function buyTickets() payable public {
         if (moneySent > 0) {
             msg.sender.transfer(moneySent);
         }
-        }
+       }

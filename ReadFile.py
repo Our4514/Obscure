@@ -8,11 +8,12 @@ test_url='/home/zhangmeng/文档/PycahrmProject/project1/test_if_while_match.sol
 reset_url='/home/zhangmeng/文档/PycahrmProject/project1/'
 test_start=5
 test_end=11
+
 #内容转换
 def transform(file_path,start_num_list,end_num_list):
     for i in range(0,len(start_num_list)):
-        read_need_partical_File(file_path,start_num_list[i]-1,end_num_list[i])
-
+        str_text=read_need_partical_File(file_path,start_num_list[i]-1,end_num_list[i])
+        print(str_text)
 
 #预先处理源文件，把源文件的else替换到下一行中去
 def Pre_deal_source_file(file_path):
@@ -135,11 +136,15 @@ def label_need_sequence(file_path):
 
 #读取我需要行数中的文件
 def read_need_partical_File(file_path,start_num,end_num):
+    str_text=''
     with open(file_path) as file_object:
       lines = file_object.readlines()
     for line in lines[start_num:end_num]:
-      print(line.rstrip())
+        join_text=line.rstrip()
+        str_text=str_text+join_text
+    return str_text
 
+#重新设置了行号和其它玩意，使用的是源文件的内容
 def re_get_num(file_path):
     start_list=[]
     i=0
